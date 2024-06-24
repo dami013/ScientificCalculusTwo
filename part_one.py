@@ -66,7 +66,7 @@ if __name__ == '__main__':
     # Applica la DCT alle righe
     dct_matrix_rows = dct_rows_only(matrix)
     print("DCT applied to rows only:")
-    print(dct_matrix_rows)
+    print(dct_matrix_rows[0])
 
     # Applica la DCT alle colonne della matrice risultante
     dct_matrix_columns = dct_columns_only(dct_matrix_rows)
