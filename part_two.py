@@ -1,11 +1,9 @@
 import numpy as np
-import tkinter as tk
 import customtkinter
 from tkinter import filedialog, messagebox
-from scipy.fftpack import dct
 import matplotlib.pyplot as plt
 from PIL import Image
-from DCT_lib import dct2_library
+from DCT_lib import dct2_library, idct2_library
 
 
 class App(customtkinter.CTk):
@@ -41,15 +39,28 @@ class App(customtkinter.CTk):
         self.apply_button.grid(row=3, columnspan=2, pady=10)
 
     def apply_dct2(self, matrix, F, d):
-        h, w = matrix.shape
+        n, m = matrix.shape
         dct_matrix = np.zeros_like(matrix, dtype=float)
-        for i in range(0, h, F):
-            for j in range(0, w, F):
+
+        for i in range(0, n - n % F, F):
+            for j in range(0, m - m % F, F):
                 block = matrix[i:i + F, j:j + F]
                 block_dct = dct2_library(block)
-                block_dct[d:, d:] = 0
-                block_idct = dct2_library(block_dct)
+
+                for k in range(F):
+                    for l in range(F):
+                        if k + l >= d:
+                            block_dct[k, l] = 0
+
+                block_idct = idct2_library(block_dct)
+
+                # Arrotondare, limitare e assegnare i valori
+                block_idct = np.round(block_idct)
+                block_idct[block_idct < 0] = 0
+                block_idct[block_idct > 255] = 255
+
                 dct_matrix[i:i + F, j:j + F] = block_idct
+
         return dct_matrix
 
     def apply_dct(self):
@@ -65,15 +76,20 @@ class App(customtkinter.CTk):
             messagebox.showerror("Error", "d must be between 0 and 2F-2")
             return
 
-        result = self.apply_dct2(img_array, F, d)
+        modified_image = self.apply_dct2(img_array, F, d)
 
-        plt.figure(figsize=(12, 6))
+        plt.figure(figsize=(10, 5))
+
         plt.subplot(1, 2, 1)
-        plt.title("Original Image")
+        plt.title('Immagine Originale')
         plt.imshow(img_array, cmap='gray')
+        plt.axis('off')
+
         plt.subplot(1, 2, 2)
-        plt.title("DCT2 Applied")
-        plt.imshow(result, cmap='gray')
+        plt.title('Immagine Modificata')
+        plt.imshow(modified_image, cmap='gray')
+        plt.axis('off')
+
         plt.show()
 
     def open_file(self):
