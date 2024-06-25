@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.fft import dct, idct
+from scipy.fft import dct, idct, dctn
 
 
 def dct_rows_only(input_matrix):
@@ -70,18 +70,18 @@ def personal_dct2(input_matrix):
 #     return dct(f.T, 2, norm='ortho')
 
 # Funzione DCT implementata da libreria esterna
-def dct_library(f):
-    return dct(f.T, norm='ortho')
+def dct_library(x):
+    return dct(x.T, norm='ortho')
 
 
 # Funzione DCT2 implementata da libreria esterna
-def dct2_library(f):
-    return dct(dct(f.T, norm='ortho').T, norm='ortho')
+def dct2_library(x):
+    return dct(dct(x.T, norm='ortho').T, norm='ortho')
 
 
-def idct_library(f):
-    return idct(f.T, norm='ortho')
+def idct_library(x):
+    return idct(x.T, norm='ortho')
 
 
-def idct2_library(f):
-    return idct(idct(f.T, norm='ortho').T, norm='ortho')
+def idct2_library(x):
+    return idct(idct(x.T, norm='ortho').T, norm='ortho')

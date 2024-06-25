@@ -6,7 +6,7 @@ import numpy as np
 
 if __name__ == '__main__':
     # Dimensioni delle matrici NxN (da 50 a 900 con passo 50)
-    matrix_dimensions = list(range(10, 1000, 50))
+    matrix_dimensions = list(range(200, 1000, 50))
 
     times_homemade = []
     times_scipy = []
@@ -19,19 +19,23 @@ if __name__ == '__main__':
 
         start_time = time.time()
         personal_dct2(matrix)
-        times_homemade.append(time.time() - start_time)
+        total_time = time.time() - start_time
+        times_homemade.append(total_time)
+        print("Homemade "+str(n)+" tempo: "+str(total_time))
 
         start_time = time.time()
         dct2_library(matrix)
-        times_scipy.append(time.time() - start_time)
+        total_time = time.time() - start_time
+        times_scipy.append(total_time)
+        print("Scipy "+str(n)+" tempo: "+str(total_time))
 
     # Dividiamo per 10^6 in modo da visualizzare le righe di comparazione vicino alla riga
     n3 = [n ** 3 / 1e5 for n in matrix_dimensions]
     n2_logn = [n ** 2 * np.log(n) / 1e8 for n in matrix_dimensions]
 
     plt.figure(figsize=(10, 6))
-    plt.semilogy(matrix_dimensions, times_scipy, label='Scipy DCT2', color="#E53F0D")
-    plt.semilogy(matrix_dimensions, n2_logn, label='n^2 * log(n)', color="#E53F0D", linestyle='dashed')
+    plt.semilogy(matrix_dimensions, times_scipy, label='Scipy DCT2', color="green")
+    plt.semilogy(matrix_dimensions, n2_logn, label='n^2 * log(n)', color="green", linestyle='dashed')
     plt.semilogy(matrix_dimensions, times_homemade, label='DCT2 homemade', color="tab:blue")
     plt.semilogy(matrix_dimensions, n3, label='n^3', color="tab:blue", linestyle='dashed')
 
