@@ -136,9 +136,23 @@ class App(customtkinter.CTk):
                 img = Image.open(file_path).convert('L')  # Convert to grayscale
                 self.img_array = np.array(img)
                 
-                # Resize image for preview
-                img.thumbnail((200, 200))  # Increase the size to 400x400 for preview
-                ctk_image = CTkImage(light_image=img, dark_image=img, size=(400, 400))
+                # Get original image dimensions
+                original_width, original_height = img.size
+                
+                # Determine preview size
+                if original_width <= 200 and original_height <= 200:
+                    preview_size = (original_width, original_height)
+                else:
+                    preview_size = (200, 200)
+                
+                # Create a copy of the image for preview
+                img_preview = img.copy()
+                
+                # Resize image for preview if necessary
+                if preview_size != (original_width, original_height):
+                    img_preview.thumbnail(preview_size)
+                
+                ctk_image = CTkImage(light_image=img_preview, dark_image=img_preview, size=preview_size)
                 self.img_preview.configure(image=ctk_image, text="")
                 self.img_preview.image = ctk_image
             except Exception as e:
