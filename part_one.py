@@ -5,7 +5,7 @@ import numpy as np
 
 
 if __name__ == '__main__':
-    # Dimensioni delle matrici NxN (da 50 a 900 con passo 50)
+    # Dimensioni delle matrici NxN (da 200 a 1000 con passo 50)
     matrix_dimensions = list(range(200, 1000, 50))
 
     times_homemade = []
@@ -23,11 +23,11 @@ if __name__ == '__main__':
         times_homemade.append(total_time)
         print("Homemade "+str(n)+" tempo: "+str(total_time))
 
-        start_time = time.time()
+        start_time2 = time.time()
         dct2_library(matrix)
-        total_time = time.time() - start_time
-        times_scipy.append(total_time)
-        print("Scipy "+str(n)+" tempo: "+str(total_time))
+        total_time2 = time.time() - start_time2
+        times_scipy.append(total_time2)
+        print("Scipy "+str(n)+" tempo: "+str(total_time2))
 
     # Dividiamo per 10^6 in modo da visualizzare le righe di comparazione vicino alla riga
     n3 = [n ** 3 / 1e5 for n in matrix_dimensions]
@@ -44,5 +44,8 @@ if __name__ == '__main__':
     plt.title('Tempi di esecuzione della DCT2 al variare della dimensione N')
     plt.legend()
     plt.grid(True)
+
+    # Salva l'immagine
+    plt.savefig('times-plot.png', dpi=300, bbox_inches='tight')
 
     plt.show()
