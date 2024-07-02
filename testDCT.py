@@ -18,9 +18,9 @@ if __name__ == '__main__':
     print(dct_matrix_rows[0])
 
     # Applica la DCT2
-    print("************DCT2************")
+    print("******* DCT2 nostra implementazione ********")
     print(personal_dct2(matrix))
 
     # Applica la DCT Scipy alla matrice
-    print("************DCT2************")
+    print("************DCT2 funzione scipy ************")
     print(dct2_library(matrix))
