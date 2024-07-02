@@ -2,6 +2,7 @@ import numpy as np
 import customtkinter
 from tkinter import filedialog, messagebox
 from customtkinter import CTkImage
+from customtkinter import CTkSwitch, StringVar
 import matplotlib.pyplot as plt
 from PIL import Image, ImageTk
 from DCT_lib import dct2_library, idct2_library
@@ -11,7 +12,7 @@ class App(customtkinter.CTk):
         super().__init__()
         self.title("DCT2 Image Processor")
         self.geometry("800x600")
-        customtkinter.set_appearance_mode("dark")
+        customtkinter.set_appearance_mode("dark")  # Start in dark mode
         customtkinter.set_default_color_theme("blue")
 
         self.grid_columnconfigure(0, weight=1)
@@ -22,9 +23,14 @@ class App(customtkinter.CTk):
         self.main_frame.grid_columnconfigure((0, 1), weight=1)
         self.main_frame.grid_rowconfigure(1, weight=1)
 
+        # Dark mode switch at the top left
+        self.dark_mode_switch = customtkinter.CTkSwitch(self.main_frame, text="Dark Mode", command=self.toggle_dark_mode)
+        self.dark_mode_switch.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+        self.dark_mode_switch.select()  # Start with dark mode on
+
         # Left column
         self.left_frame = customtkinter.CTkFrame(self.main_frame)
-        self.left_frame.grid(row=0, column=0, rowspan=2, padx=10, pady=10, sticky="nsew")
+        self.left_frame.grid(row=1, column=0, rowspan=2, padx=10, pady=10, sticky="nsew")
 
         self.file_button = customtkinter.CTkButton(self.left_frame, text="Select BMP Image", command=self.open_file)
         self.file_button.pack(pady=(0, 20), padx=10, fill="x")
@@ -34,7 +40,7 @@ class App(customtkinter.CTk):
 
         # Right column
         self.right_frame = customtkinter.CTkFrame(self.main_frame)
-        self.right_frame.grid(row=0, column=1, rowspan=2, padx=10, pady=10, sticky="nsew")
+        self.right_frame.grid(row=1, column=1, rowspan=2, padx=10, pady=10, sticky="nsew")
 
         self.params_frame = customtkinter.CTkFrame(self.right_frame)
         self.params_frame.pack(pady=10, padx=10, fill="x")
@@ -61,10 +67,16 @@ class App(customtkinter.CTk):
 
         # Status bar
         self.status_bar = customtkinter.CTkLabel(self.main_frame, text="Ready", anchor="w")
-        self.status_bar.grid(row=2, column=0, columnspan=2, sticky="ew", padx=10, pady=(5, 0))
+        self.status_bar.grid(row=3, column=0, columnspan=2, sticky="ew", padx=10, pady=(5, 0))
 
         self.img_array = None
         self.processed_image = None
+
+    def toggle_dark_mode(self):
+        if self.dark_mode_switch.get() == 1:
+            customtkinter.set_appearance_mode("dark")
+        else:
+            customtkinter.set_appearance_mode("light")
 
     def apply_dct2(self, matrix, F, d):
         n, m = matrix.shape
