@@ -1,6 +1,4 @@
- ## Prima parte
- 
- Implementare la DCT2 come spiegata a lezione in un ambiente open source a vostra scelta e confrontare i tempi di esecuzione con la DCT2 ottenuta usando la libreria dell’ambiente utilizzato, che si presuppone essere nella versione fast (FFT).
- 
- In particolare, procurarsi array quadrati N×N con N crescente e rappresentare su un grafico in scala semilogaritmica (le ascisse saranno le pure quantità scalari mentre le ordinate il logaritmo) al variare di N il tempo impiegato ad eseguire la DCT2 col vostro algoritmo fatto in casa e con l’algoritmo della libreria.
- I tempi dovrebbero essere proporzionali a N3 per la DCT2 fatta in casa e a N2 per la versione fast (pi` u precisamente a N2 log(N)). I tempi ottenuti con la versione fast potrebbero avere un andamento irregolare dovuto al tipo di algoritmo utilizzato.
+## Part One
+Implement the DCT2 (Discrete Cosine Transform Type 2) as explained in the lecture in an open-source environment of your choice. Compare the execution times with the DCT2 obtained using the library of the chosen environment, which is assumed to be in the fast version (FFT).
+Specifically, obtain square arrays of size N×N with increasing N and plot on a semi-logarithmic scale graph (the x-axis will be the scalar quantities while the y-axis will be the logarithm) the time taken to execute the DCT2 with your homemade algorithm and with the library algorithm as N varies.
+The execution times should be proportional to N³ for the homemade DCT2 and to N² for the fast version (more precisely, to N² log(N)). The times obtained with the fast version might have an irregular trend due to the type of algorithm used.
